@@ -24,6 +24,7 @@ var gfArrayPtr = ref.refType(gfArray);
 
 module.exports = function() {
   var libencrypt = ffi.Library('./libtweetnacl', {
+    'random_bytes': [sv, [u8Ptr, 'int']],
     'st32': [sv, [u8Ptr, u32Ptr]],
     'ts64': [sv, [u8Ptr, u64Ptr]],
     'crypto_verify_16': ['int', [u8, u8]],

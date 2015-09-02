@@ -36,6 +36,13 @@ var msg =       'message to encrypt              ';
 var scalarmul_1 = 'qTt5ihiQhxxOZ+KJyTmks9+GVsA4OfZScMDKVL9tz3U=';
 var scalarmul_2 = 'Tb3on013uC30mOpt8q0DSH3TZdCEyYx9VcKM09Djt1w=';
 
+// --START--- random_bytes: Test Box create keypair function --------------------------------
+
+var test = convertedLibary.random_bytes(u8PtrOut1, 32);
+console.log('Test random_bytes: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+assert.equal(u8PtrOut1.toString('base64').length, 44);
+
+// --END--- random_bytes: Test Box create keypair function --------------------------------
 
 // --START--- crypto_box_keypair: Test Box create keypair function --------------------------------
 

@@ -46,6 +46,11 @@ static u64 dl64(const u8 *x)
   return u;
 }
 
+sv random_bytes(u8 *x, int l)
+{
+  RAND_bytes(x, l);
+}
+
 sv st32(u8 *x,u32 u)
 {
   int i;
