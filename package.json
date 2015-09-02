@@ -1,0 +1,50 @@
+{
+  "name": "tweetnacl-nodewrap",
+  "version": "0.1.0",
+  "description": "Nodejs wraper for TweetNaCl cryptographic library",
+  "main": "nacl.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitmark-inc/tweetnacl-nodewrap.git"
+  },
+  "keywords": [
+    "crypto",
+    "cryptography",
+    "curve25519",
+    "ed25519",
+    "encrypt",
+    "hash",
+    "key",
+    "nacl",
+    "poly1305",
+    "public",
+    "salsa20",
+    "signatures"
+  ],
+  "author": "bitmark-inc",
+  "license": "Public domain",
+  "bugs": {
+    "url": "https://github.com/bitmark-inc/tweetnacl-nodewrap/issues"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "devDependencies": {
+    "tape": "^4.0.0",
+    "uglify-js": "^2.4.21",
+    "bindings": "~1.2.0",
+    "debug": "~2",
+    "ref": "~1.0.2",
+    "ref-struct": "~1.0.1",
+    "nan": "~1",
+    "mocha": "*",
+    "ref-array": "*"
+  },
+  "browser": {
+    "buffer": false,
+    "crypto": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "tweetnacl-nodewrap",
+  "version": "0.1.0",
+  "description": "Nodejs wraper for TweetNaCl cryptographic library",
+  "authors": [
+    "TweetNaCl.js Contributors"
+  ],
+  "description": "Port of TweetNaCl cryptographic library to JavaScript",
+  "main": "nacl.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "crypto",
+    "cryptography",
+    "curve25519",
+    "ed25519",
+    "encrypt",
+    "hash",
+    "key",
+    "nacl",
+    "poly1305",
+    "public",
+    "salsa20",
+    "signatures"
+  ],
+  "license": "Public domain",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "package.json"
+  ]
+}
