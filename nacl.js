@@ -259,7 +259,7 @@
       throw new Error('bad secret key size');
     var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
     for (var i = 0; i < pk.length; i++) pk[i] = secretKey[32+i];
-    return {publicKey: pk, secretKey: (new Buffer(secretKey)).fill(0)};
+    return {publicKey: pk, secretKey: new Buffer(secretKey)};
   };
 
   nacl.sign.keyPair.fromSeed = function(seed) {
