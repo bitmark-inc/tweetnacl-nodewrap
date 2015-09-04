@@ -63,6 +63,7 @@
 
   /* Load tweetnacl-nodeAPI */
   var tweetnacl = require('./tweetnacl_wrapper');
+  var typedef = require('./tweetnacl_typedef.js')
 
   /* High-level API */
 
@@ -204,8 +205,9 @@
     checkArrayTypes(msg, secretKey);
     if (secretKey.length !== crypto_sign_SECRETKEYBYTES)
       throw new Error('bad secret key size');
-    var signedMsg = (new Buffer(crypto_sign_BYTES+msg.length)).fill(0);
-    tweetnacl.crypto_sign(signedMsg, signedMsg.length, msg, msg.length, secretKey);
+    var signedMsg = (new Buffer(crypto_sign_BYTES + msg.length)).fill(0);
+    var signedMsgLenght = typedef.ref.alloc(typedef.u64);
+    tweetnacl.crypto_sign(signedMsg, signedMsgLenght, msg, msg.length, secretKey);
     return signedMsg;
   };
 
@@ -216,9 +218,9 @@
     if (publicKey.length !== crypto_sign_PUBLICKEYBYTES)
       throw new Error('bad public key size');
     var tmp = (new Buffer(signedMsg.length)).fill(0);
-    var mlen = tweetnacl.crypto_sign_open(tmp, signedMsg, signedMsg.length, publicKey);
-    if (mlen < 0) return null;
-    var m = (new Buffer(mlen)).fill(0);
+    var tmpLenght = typedef.ref.alloc(typedef.u64);
+    if (tweetnacl.crypto_sign_open(tmp, tmpLenght, signedMsg, signedMsg.length, publicKey) != 0) return false;
+    var m = (new Buffer(tmpLenght)).fill(0);
     for (var i = 0; i < m.length; i++) m[i] = tmp[i];
     return m;
   };
