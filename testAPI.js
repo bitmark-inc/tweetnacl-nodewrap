@@ -28,45 +28,45 @@ var mySecretKey = 'V0Gc/QaeSvHTqxMBFBW/d8E8hsg8YXH6Qj4JmzWWkzI=';
 var myPublicKey = 'lAOS8PCuvK51JOGMh7a8/ngj8yTSkp2sVlJ8ZY/pABY=';
 var theirPublcKey = 'axvuknosFJ27gTRSUoGa8KgACO4AqX3Hqowlz1BWKzU=';
 var theirPublicKey = 'C7MEFFyVmQ+7CnbCmNFr271gcdGYgWSp8U9RhS1a1Rg=';
-var boxbefore = 'VnvLtuvs+gwM50zmAJhRdoF+kx6P0C+eD8gEoe8WTHc=';
+var boxbefore = 'givKPH4F/eDcIEUZcws1+BIWqcnx35Ul4qkA7Ilxj1c=';
 // var boxAfter =  '2c205b75385074722c2075382c2075382c2075385d5d2c0a2020202027637279';
-var secretBox = 'AAAAAAAAAAAAAAAAAAAAAA2JhvPBmp8Hx25KwGo7j1g=';
-var nonce =     'nonce to encrypt                ';
-var msg =       'message to encrypt              ';
+var secretBox = 'mdNSaX17zhABF/BE2uuWs5J4DtTOxW+PhISe3czJZTc=';
+var nonce =     'crkCCNKADjatFscwlBoDjXw62dhwMNMp';
+var msg =       'ebNFUe0iT6F8tkYMy5Cg2Q==';
 var scalarmul_1 = 'qTt5ihiQhxxOZ+KJyTmks9+GVsA4OfZScMDKVL9tz3U=';
 var scalarmul_2 = 'Tb3on013uC30mOpt8q0DSH3TZdCEyYx9VcKM09Djt1w=';
 
 // --START--- random_bytes: Test Box create keypair function --------------------------------
 
-var test = convertedLibary.random_bytes(u8PtrOut1, 32);
-console.log('Test random_bytes: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
-assert.equal(u8PtrOut1.toString('base64').length, 44);
+// var test = convertedLibary.random_bytes(u8PtrOut1, 32);
+// console.log('Test random_bytes: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(u8PtrOut1.toString('base64').length, 44);
 
 // --END--- random_bytes: Test Box create keypair function --------------------------------
 
 // --START--- crypto_box_keypair: Test Box create keypair function --------------------------------
 
-var test = convertedLibary.crypto_box_keypair(u8PtrOut1, u8PtrOut2);
-console.log('Test crypto_box_keypair: ' + test + ' -- ' + u8PtrOut1.toString('base64') + ' -- ' + u8PtrOut2.toString('base64'));
-assert.equal(test, 0);
+// var test = convertedLibary.crypto_box_keypair(u8PtrOut1, u8PtrOut2);
+// console.log('Test crypto_box_keypair: ' + test + ' -- ' + u8PtrOut1.toString('base64') + ' -- ' + u8PtrOut2.toString('base64'));
+// assert.equal(test, 0);
 
 // --END--- crypto_box_keypair: Test Box create keypair function --------------------------------
 
 // --START--- crypto_box_beforenm: Test Box create keypair function --------------------------------
-u8PtrOut1 = new Buffer(32);
+// u8PtrOut1 = new Buffer(32);
 
-var test = convertedLibary.crypto_box_beforenm(u8PtrOut1, theirPublicKey, mySecretKey);
-console.log('Test crypto_box_beforenm: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
-assert.equal(test, 0);
+// var test = convertedLibary.crypto_box_beforenm(u8PtrOut1, theirPublicKey, mySecretKey);
+// console.log('Test crypto_box_beforenm: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(test, 0);
 
 // --END--- crypto_box_beforenm: Test Box create keypair function --------------------------------
 
 // --START--- crypto_secretbox: Test Box create keypair function --------------------------------
-u8PtrOut1 = new Buffer(32);
+// u8PtrOut1 = new Buffer(32);
 
-var test = convertedLibary.crypto_secretbox(u8PtrOut1, msg, msg.length, nonce, boxbefore);
-console.log('Test crypto_secretbox: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
-assert.equal(test, 0);
+// var test = convertedLibary.crypto_secretbox(u8PtrOut1, msg, msg.length, nonce, boxbefore);
+// console.log('Test crypto_secretbox: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(test, 0);
 
 // --END--- crypto_secretbox: Test Box create keypair function --------------------------------
 
@@ -80,21 +80,29 @@ assert.equal(test, 0);
 // --END--- crypto_secretbox_open: Test Box create keypair function --------------------------------
 
 // --START--- crypto_secretbox_open: Test Box create keypair function --------------------------------
-u8PtrOut1 = new Buffer(32);
+// u8PtrOut1 = new Buffer(32);
 
-var test = convertedLibary.crypto_scalarmult(u8PtrOut1, scalarmul_1, scalarmul_2);
-console.log('Test crypto_scalarmult: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
-assert.equal(test, 0);
+// var test = convertedLibary.crypto_scalarmult(u8PtrOut1, scalarmul_1, scalarmul_2);
+// console.log('Test crypto_scalarmult: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(test, 0);
 
 // --END--- crypto_scalarmult: Test Box create keypair function --------------------------------
 
 
 // --START--- crypto_scalarmult_base: Test Box create keypair function --------------------------------
-u8PtrOut1 = new Buffer(32);
+// u8PtrOut1 = new Buffer(32);
 
-var test = convertedLibary.crypto_scalarmult_base(u8PtrOut1, mySecretKey);
-console.log('Test crypto_scalarmult_base: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
-assert.equal(test, 0);
+// var test = convertedLibary.crypto_scalarmult_base(u8PtrOut1, mySecretKey);
+// console.log('Test crypto_scalarmult_base: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(test, 0);
 
 // --END--- crypto_scalarmult_base: Test Box create keypair function --------------------------------
 
+// --START--- vn: Test Box create keypair function --------------------------------
+// u8PtrOut1 = new Buffer(32);
+
+// var test = convertedLibary.crypto_scalarmult_base(u8PtrOut1, mySecretKey);
+// console.log('Test crypto_scalarmult_base: ' + test + ' -- ' + u8PtrOut1.toString('base64'));
+// assert.equal(test, 0);
+
+// --END--- vn: Test Box create keypair function --------------------------------
