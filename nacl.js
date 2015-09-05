@@ -19,29 +19,6 @@
       crypto_hash_BYTES = 64;
 
   nacl.lowlevel = {
-    // crypto_core_hsalsa20: crypto_core_hsalsa20,
-    // crypto_stream_xor : crypto_stream_xor,
-    // crypto_stream : crypto_stream,
-    // crypto_stream_salsa20_xor : crypto_stream_salsa20_xor,
-    // crypto_stream_salsa20 : crypto_stream_salsa20,
-    // crypto_onetimeauth : crypto_onetimeauth,
-    // crypto_onetimeauth_verify : crypto_onetimeauth_verify,
-    // crypto_verify_16 : crypto_verify_16,
-    // crypto_verify_32 : crypto_verify_32,
-    // crypto_secretbox : crypto_secretbox,
-    // crypto_secretbox_open : crypto_secretbox_open,
-    // crypto_scalarmult : crypto_scalarmult,
-    // crypto_scalarmult_base : crypto_scalarmult_base,
-    // crypto_box_beforenm : crypto_box_beforenm,
-    // crypto_box_afternm : crypto_box_afternm,
-    // crypto_box : crypto_box,
-    // crypto_box_open : crypto_box_open,
-    // crypto_box_keypair : crypto_box_keypair,
-    // crypto_hash : crypto_hash,
-    // crypto_sign : crypto_sign,
-    // crypto_sign_keypair : crypto_sign_keypair,
-    // crypto_sign_open : crypto_sign_open,
-
     crypto_secretbox_KEYBYTES : crypto_secretbox_KEYBYTES,
     crypto_secretbox_NONCEBYTES : crypto_secretbox_NONCEBYTES,
     crypto_secretbox_ZEROBYTES : crypto_secretbox_ZEROBYTES,
@@ -243,7 +220,8 @@
     var i;
     for (i = 0; i < crypto_sign_BYTES; i++) sm[i] = sig[i];
     for (i = 0; i < msg.length; i++) sm[i+crypto_sign_BYTES] = msg[i];
-    return (tweetnacl.crypto_sign_open(m, sm, sm.length, publicKey) >= 0);
+      var tmpLenght = typedef.ref.alloc(typedef.u64);
+    return (tweetnacl.crypto_sign_open(m, tmpLenght, sm, sm.length, publicKey) >= 0);
   };
 
   nacl.sign.keyPair = function() {
@@ -269,7 +247,7 @@
     var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
     var sk = (new Buffer(crypto_sign_SECRETKEYBYTES)).fill(0);
     for (var i = 0; i < 32; i++) sk[i] = seed[i];
-    tweetnacl.crypto_sign_keypair(pk, sk, true);
+    tweetnacl.crypto_sign_keypair(pk, sk);
     return {publicKey: pk, secretKey: sk};
   };
 
@@ -278,57 +256,21 @@
   nacl.sign.seedLength = crypto_sign_SEEDBYTES;
   nacl.sign.signatureLength = crypto_sign_BYTES;
 
-  // nacl.hash = function(msg) {
-  //   checkArrayTypes(msg);
-  //   var h = new Uint8Array(crypto_hash_BYTES);
-  //   crypto_hash(h, msg, msg.length);
-  //   return h;
-  // };
+  nacl.hash = function(msg) {
+    checkArrayTypes(msg);
+    var h = new Buffer(crypto_hash_BYTES);
+    tweetnacl.crypto_hash(h, msg, msg.length);
+    return h;
+  };
 
-  // nacl.hash.hashLength = crypto_hash_BYTES;
+  nacl.hash.hashLength = crypto_hash_BYTES;
 
-  // nacl.verify = function(x, y) {
-  //   checkArrayTypes(x, y);
-  //   // Zero length arguments are considered not equal.
-  //   if (x.length === 0 || y.length === 0) return false;
-  //   if (x.length !== y.length) return false;
-  //   return (vn(x, 0, y, 0, x.length) === 0) ? true : false;
-  // };
+  nacl.verify = function(x, y) {
+    checkArrayTypes(x, y);
+    // Zero length arguments are considered not equal.
+    if (x.length === 0 || y.length === 0) return false;
+    if (x.length !== y.length) return false;
+    return (tweetnacl.vn(x, 0, y, 0, x.length) === 0) ? true : false;
+  };
 
-  // nacl.setPRNG = function(fn) {
-  //   randombytes = fn;
-  // };
-
-  // (function() {
-  //   // Initialize PRNG if environment provides CSPRNG.
-  //   // If not, methods calling randombytes will throw.
-  //   var crypto;
-  //   if (typeof window !== 'undefined') {
-  //     // Browser.
-  //     if (window.crypto && window.crypto.getRandomValues) {
-  //       crypto = window.crypto; // Standard
-  //     } else if (window.msCrypto && window.msCrypto.getRandomValues) {
-  //       crypto = window.msCrypto; // Internet Explorer 11+
-  //     }
-  //     if (crypto) {
-  //       nacl.setPRNG(function(x, n) {
-  //         var i, v = new Uint8Array(n);
-  //         crypto.getRandomValues(v);
-  //         for (i = 0; i < n; i++) x[i] = v[i];
-  //         cleanup(v);
-  //       });
-  //     }
-  //   } else if (typeof require !== 'undefined') {
-  //     // Node.js.
-  //     crypto = require('crypto');
-  //     if (crypto) {
-  //       nacl.setPRNG(function(x, n) {
-  //         var i, v = crypto.randomBytes(n);
-  //         for (i = 0; i < n; i++) x[i] = v[i];
-  //         cleanup(v);
-  //       });
-  //     }
-  //   }
-  // })();
-
-})(typeof module !== 'undefined' && module.exports ? module.exports : (window.nacl = window.nacl || {}));
+})(module.exports);
