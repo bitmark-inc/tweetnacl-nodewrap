@@ -45,8 +45,14 @@ test('nacl.sign.keyPair.fromSeed', function(t) {
   t.equal(k1.publicKey.length, nacl.sign.publicKeyLength);
   t.equal(k2.secretKey.length, nacl.sign.secretKeyLength);
   t.equal(k2.publicKey.length, nacl.sign.publicKeyLength);
-  t.notEqual(enc(k2.secretKey), enc(k1.secretKey));
-  t.notEqual(enc(k2.publicKey), enc(k1.publicKey));
+  t.equal(enc(k2.secretKey), enc(k1.secretKey));
+  t.equal(enc(k2.publicKey), enc(k1.publicKey));
+  var seed2 = nacl.randomBytes(nacl.sign.seedLength);
+  var k3 = nacl.sign.keyPair.fromSeed(seed2);
+  t.equal(k3.secretKey.length, nacl.sign.secretKeyLength);
+  t.equal(k3.publicKey.length, nacl.sign.publicKeyLength);
+  t.notEqual(enc(k3.secretKey), enc(k1.secretKey));
+  t.notEqual(enc(k3.publicKey), enc(k1.publicKey));
   t.throws(function() { nacl.sign.keyPair.fromSeed(seed2.subarray(0, 16)) }, Error, 'should throw error for wrong seed size');
   t.end();
 });

@@ -247,7 +247,7 @@
     var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
     var sk = (new Buffer(crypto_sign_SECRETKEYBYTES)).fill(0);
     for (var i = 0; i < 32; i++) sk[i] = seed[i];
-    tweetnacl.crypto_sign_keypair(pk, sk);
+    tweetnacl.crypto_sign_keypair_seeded(pk, sk, true);
     return {publicKey: pk, secretKey: sk};
   };
 

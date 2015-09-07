@@ -34,6 +34,7 @@ module.exports = function() {
     'crypto_hashblocks': ['int', [typedef.u8Ptr, typedef.u8Ptr, typedef.u64]],
     'crypto_hash': ['int', [typedef.u8Ptr, typedef.u8Ptr, typedef.u64]],
     'crypto_sign_keypair': ['int', [typedef.u8Ptr, typedef.u8Ptr]],
+    'crypto_sign_keypair_seeded': ['int', [typedef.u8Ptr, typedef.u8Ptr, 'bool']],
     'modL': [typedef.sv, [typedef.u8Ptr, typedef.i64ArrayPtr]],
     'reduce': [typedef.sv, [typedef.u8Ptr]],
     'crypto_sign': ['int', [typedef.u8Ptr, typedef.u64Ptr, typedef.u8Ptr, typedef.u64, typedef.u8Ptr]],

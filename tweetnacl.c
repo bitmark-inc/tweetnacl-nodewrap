@@ -3,12 +3,18 @@
 #include <openssl/rand.h>
 #define FOR(i,n) for (i = 0;i < n;++i)
 
+
 #if defined(WIN32) || defined(_WIN32)
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT
 #endif
 
+typedef enum
+{
+  false = ( 1 == 0 ),
+  true = ( ! false )
+} bool;
 typedef void sv;
 typedef unsigned char u8;
 typedef unsigned long u32;
@@ -663,13 +669,20 @@ sv scalarbase(gf p[4],const u8 *s)
   scalarmult(p,q,s);
 }
 
-int crypto_sign_keypair(u8 *pk, u8 *sk)
+int crypto_sign_keypair(u8 *pk, u8 *sk){
+  bool b = false;
+  return crypto_sign_keypair_seeded(pk, sk, b);
+}
+
+int crypto_sign_keypair_seeded(u8 *pk, u8 *sk, bool seeded)
 {
   u8 d[64];
   gf p[4];
   int i;
 
-  RAND_bytes(sk, 32);
+  if (!seeded) {
+    RAND_bytes(sk, 32);
+  }
   crypto_hash(d, sk, 32);
   d[0] &= 248;
   d[31] &= 127;
