@@ -74,8 +74,8 @@ Generates a new random key pair for box and returns it as an object with
 `publicKey` and `secretKey` members:
 
     {
-       publicKey: ...,  // Uint8Array with 32-byte public key
-       secretKey: ...   // Uint8Array with 32-byte secret key
+       publicKey: ...,  // Buffer with 32-byte public key
+       secretKey: ...   // Buffer with 32-byte secret key
     }
 
 
@@ -197,8 +197,8 @@ Generates new random key pair for signing and returns it as an object with
 `publicKey` and `secretKey` members:
 
     {
-       publicKey: ...,  // Uint8Array with 32-byte public key
-       secretKey: ...   // Uint8Array with 64-byte secret key
+       publicKey: ...,  // Buffer with 32-byte public key
+       secretKey: ...   // Buffer with 64-byte secret key
     }
 
 #### nacl.sign.keyPair.fromSecretKey(secretKey)
@@ -266,6 +266,7 @@ Length of hash in bytes.
 ### Random bytes generation
 
 #### nacl.randomBytes(length)
+Implements *RAND_bytes openSSL*.
 
 Returns a Buffer of `base64` of the given length containing random bytes of
 cryptographic quality.
@@ -283,3 +284,7 @@ non-zero and equal, and their contents are equal.
 
 Returns `false` if either of the arguments has zero length, or arguments have
 different lengths, or their contents differ.
+
+### Thanks
+
+Special thanks to @TooTallNate who is owner of node-ffi and node-ref, and also help us quickly resolve some issues.
