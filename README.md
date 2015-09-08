@@ -62,7 +62,7 @@ or [download source code](https://github.com/bitmark-inc/tweetnacl-nodewrap).
 Usage
 ------
 
-All API functions accept and return Buffer as `base64`s.  You can easy to decode by `Buffer.toString('base64')`.
+All API functions accept and return Buffer as `base64`.  You can easy to decode by `nacl.util.encodeBase64(value)` or `toString('base64')`.
 
 ### Public-key authenticated encryption (box)
 
