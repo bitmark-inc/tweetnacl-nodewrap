@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Data folder
   config.vm.synced_folder "./", "/home/vagrant/tweetnacl"
   config.vm.synced_folder "../tweetnacl-js", "/home/vagrant/tweetnacl-js"
+  config.vm.synced_folder "../bitmark-lib", "/home/vagrant/bitmark-lib"
 
   if defined?(SHARED_BOX_URL)
     config.vm.box = "amaryllis-amaryllis"

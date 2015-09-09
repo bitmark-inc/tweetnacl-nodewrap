@@ -3,9 +3,10 @@
 
 var ffi = require('./lib/ffi');
 var typedef = require('./tweetnacl_typedef.js')
+var path = require('path');
 
 module.exports = function() {
-  var libencrypt = ffi.Library('./libtweetnacl', {
+  var libencrypt = ffi.Library(path.resolve(__dirname, 'libtweetnacl.so'), {
     'random_bytes': [typedef.sv, [typedef.u8Ptr, 'int']],
     'st32': [typedef.sv, [typedef.u8Ptr, typedef.u32]],
     'ts64': [typedef.sv, [typedef.u8Ptr, typedef.u64]],
