@@ -44,8 +44,9 @@ Tweetnacl-nodewrap.js supports for all of devices:
 
 Other systems:
 
-* Node.js (we test on 0.10 and later)
+* [Node.js](https://nodejs.org/en/) (we test on 0.10 and later)
 * g++: Install g++ to compile C++ code
+* [node-gyp](https://github.com/nodejs/node-gyp): native addon build tool
 
 Installation
 ------------
@@ -57,6 +58,23 @@ You can install tweetnacl_wrapper.is via a package manager:
     $ npm install tweetnacl-nodewrap
 
 or [download source code](https://github.com/bitmark-inc/tweetnacl-nodewrap).
+
+* NOTE: When you want to use with node-webkit version, please follow these steps bellow
+
+	* Install [nw-gyp](https://github.com/nwjs/nw.js): native addon build tool for node-webkit.
+	* Rebuild `node-ref` with `nw-gyp`
+
+		```
+		$ cd node_modules/ref
+		$ nw-gyp rebuild --target=xxx (xxx: your nw-gyp version)
+		
+		```
+	* Rebuild `tweetnacl-nodewrap` with `nw-gyp`
+	
+		```
+		$ cd <root folder of tweetnacl-nodewrap>
+		$ nw-gyp rebuild --target=xxx (xxx: your nw-gyp version)
+		```
 
 
 Usage
