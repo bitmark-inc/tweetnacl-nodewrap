@@ -41,7 +41,7 @@
     "debug": "~2",
     "ref": "1",
     "ref-struct": "1",
-    "nan": "~1",
+    "nan": "2",
     "mocha": "*",
     "ref-array": "*"
   },
