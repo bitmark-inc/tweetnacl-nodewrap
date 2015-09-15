@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <stdio.h>
-#include <openssl/rand.h>
 #define FOR(i,n) for (i = 0;i < n;++i)
 
 
@@ -52,10 +51,10 @@ static u64 dl64(const u8 *x)
   return u;
 }
 
-sv random_bytes(u8 *x, int l)
-{
-  RAND_bytes(x, l);
-}
+// sv random_bytes(u8 *x, int l)
+// {
+//   RAND_bytes(x, l);
+// }
 
 sv st32(u8 *x,u32 u)
 {
@@ -464,11 +463,11 @@ int crypto_scalarmult_base(u8 *q,const u8 *n)
   return crypto_scalarmult(q,n,_9);
 }
 
-int crypto_box_keypair(u8 *y,u8 *x)
-{
-  RAND_bytes(x,32);
-  return crypto_scalarmult_base(y,x);
-}
+// int crypto_box_keypair(u8 *y,u8 *x)
+// {
+//   RAND_bytes(x,32);
+//   return crypto_scalarmult_base(y,x);
+// }
 int crypto_box_beforenm(u8 *k,const u8 *y,const u8 *x)
 {
   u8 s[32];
@@ -669,20 +668,12 @@ sv scalarbase(gf p[4],const u8 *s)
   scalarmult(p,q,s);
 }
 
-int crypto_sign_keypair(u8 *pk, u8 *sk){
-  bool b = false;
-  return crypto_sign_keypair_seeded(pk, sk, b);
-}
-
-int crypto_sign_keypair_seeded(u8 *pk, u8 *sk, bool seeded)
+int crypto_sign_keypair(u8 *pk, u8 *sk)
 {
   u8 d[64];
   gf p[4];
   int i;
 
-  if (!seeded) {
-    RAND_bytes(sk, 32);
-  }
   crypto_hash(d, sk, 32);
   d[0] &= 248;
   d[31] &= 127;
