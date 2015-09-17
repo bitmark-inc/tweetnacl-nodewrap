@@ -7,7 +7,7 @@ var path = require('path');
 var crypto = require('crypto');
 
 module.exports = function() {
-  var libencrypt = ffi.Library(path.resolve(__dirname, 'libtweetnacl.so'), {
+  var libencrypt = ffi.Library(path.resolve(__dirname, 'libtweetnacl'), {
     'st32': [typedef.sv, [typedef.u8Ptr, typedef.u32]],
     'ts64': [typedef.sv, [typedef.u8Ptr, typedef.u64]],
     'crypto_verify_16': ['int', [typedef.u8Ptr, typedef.u8Ptr]],
