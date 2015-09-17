@@ -1,5 +1,4 @@
 var ref = require('ref');
-var ArrayType = require('ref-array');
 
 var sv = ref.types.void;
 var u8 = ref.types.CString;
@@ -10,12 +9,6 @@ var u64 = ref.types.ulonglong;
 var u64Ptr = ref.refType(u64);
 var i64 = ref.types.longlong;
 var i64Ptr = ref.refType(i64);
-var i64Array = ArrayType(i64);
-var i64ArrayPtr = ref.refType(i64Array);
-var gf = ArrayType(i64);
-var gfPtr = ref.refType(gf);
-var gfArray = ArrayType(gf);
-var gfArrayPtr = ref.refType(gfArray);
 
 
 module.exports = function() {
@@ -30,13 +23,7 @@ module.exports = function() {
     "u64": ref.types.ulonglong,
     "u64Ptr": ref.refType(u64),
     "i64": ref.types.longlong,
-    "i64Ptr": ref.refType(i64),
-    "i64Array": ArrayType(i64),
-    "i64ArrayPtr": ref.refType(i64Array),
-    "gf": ArrayType(i64),
-    "gfPtr": ref.refType(gf),
-    "gfArray": ArrayType(gf),
-    "gfArrayPtr": ref.refType(gfArray)
+    "i64Ptr": ref.refType(i64)
   }
   return typedef
 }()
