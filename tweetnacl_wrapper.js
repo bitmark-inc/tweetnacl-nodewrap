@@ -1,4 +1,5 @@
 // gcc -shared -fpic tweetnacl.c -o libtweetnacl.so
+// gcc -dynamiclib -undefined suppress -flat_namespace tweetnacl.c -o libtweetnacl.dylib
 // gcc -shared -fpic randombytes.c -o librandombytes.so
 
 var ffi = require('./lib/ffi');
