@@ -1,4 +1,4 @@
-var nacl = require('../' + (process.env.NACL_SRC || 'nacl.js'));
+var nacl = require('../src/js/nacl.js');
 var test = require('tape');
 
 var specVectors = require('./data/sign.spec');
@@ -34,6 +34,7 @@ module.exports = function() {
     t.ok(signedMsg, 'Message must be signed');
     var openedMsg = nacl.sign.open(signedMsg, keys.publicKey);
     t.ok(openedMsg, 'Signed Message must be opened');
+    t.equal(openedMsg.length, 100);
     t.end();
   });
 

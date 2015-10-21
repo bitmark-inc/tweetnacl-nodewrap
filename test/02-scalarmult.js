@@ -1,4 +1,4 @@
-var nacl = require('../' + (process.env.NACL_SRC || 'nacl.js'));
+var nacl = require('../src/js/nacl.js');
 var test = require('tape');
 
 var randomVectors = require('./data/scalarmult.random');
