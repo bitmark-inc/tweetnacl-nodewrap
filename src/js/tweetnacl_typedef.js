@@ -24,6 +24,6 @@ module.exports = function() {
     "u64Ptr": ref.refType(u64),
     "i64": ref.types.longlong,
     "i64Ptr": ref.refType(i64)
-  }
-  return typedef
-}()
+  };
+  return typedef;
+};

@@ -3,7 +3,7 @@
 // gcc -shared -fpic randombytes.c -o librandombytes.so
 
 var ffi = require('ffi');
-var typedef = require('./tweetnacl_typedef.js')
+var typedef = require('./tweetnacl_typedef.js')();
 var path = require('path');
 var crypto = require('crypto');
 var root_path = __dirname.replace('/js', '/');
@@ -42,25 +42,25 @@ module.exports = function() {
     'reduce': [typedef.sv, [typedef.u8Ptr]],
     'crypto_sign': ['int', [typedef.u8Ptr, typedef.u64Ptr, typedef.u8Ptr, typedef.u64, typedef.u8Ptr]],
     'crypto_sign_open': ['int', [typedef.u8Ptr, typedef.u64Ptr, typedef.u8Ptr, typedef.u64, typedef.u8Ptr]]
-  })
+  });
 
   libencrypt['crypto_box_keypair'] = function(pk, sk) {
     crypto.randomBytes(32).copy(sk);
     return libencrypt.crypto_scalarmult_base(pk, sk);
-  }
+  };
 
   libencrypt['crypto_sign_keypair_wrap'] = function(pk, sk) {
     crypto.randomBytes(32).copy(sk);
     return libencrypt.crypto_sign_keypair(pk, sk);
-  }  
+  };
 
   libencrypt['crypto_sign_keypair_seeded'] = function(pk, sk) {
     return libencrypt.crypto_sign_keypair(pk, sk);
-  }
+  };
 
   libencrypt['random_bytes'] = function(b, n) {
     crypto.randomBytes(n).copy(b);
-  }
+  };
 
   return libencrypt;
-}()
+};
