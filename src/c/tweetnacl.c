@@ -625,7 +625,7 @@ sv add(gf p[4],gf q[4])
   M(p[3], e, h);
 }
 
-sv cswap(gf p[4],gf q[4],u8 b)
+sv _cswap(gf p[4],gf q[4],u8 b)
 {
   int i;
   FOR(i,4)
@@ -651,10 +651,10 @@ sv scalarmult(gf p[4],gf q[4],const u8 *s)
   set25519(p[3],gf0);
   for (i = 255;i >= 0;--i) {
     u8 b = (s[i/8]>>(i&7))&1;
-    cswap(p,q,b);
+    _cswap(p,q,b);
     add(q,p);
     add(p,p);
-    cswap(p,q,b);
+    _cswap(p,q,b);
   }
 }
 
