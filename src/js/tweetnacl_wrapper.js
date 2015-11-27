@@ -6,12 +6,15 @@ var ffi = require('ffi');
 var typedef = require('./tweetnacl_typedef.js')();
 var path = require('path');
 var crypto = require('crypto');
-var root_path = __dirname.replace('/js', '/');
-
-console.log(root_path);
+var libPath = '';
+if (ffi.LIB_EXT === '.dll') {
+  libPath = path.resolve(__dirname.replace('\\js', '\\'), 'c\\libtweetnacl');
+} else {
+  libPath = path.resolve(__dirname.replace('/js', '/'), 'c/libtweetnacl');
+}
 
 module.exports = function() {
-  var libencrypt = ffi.Library(path.resolve(root_path, 'c/libtweetnacl'), {
+  var libencrypt = ffi.Library(libPath, {
     'st32': [typedef.sv, [typedef.u8Ptr, typedef.u32]],
     'ts64': [typedef.sv, [typedef.u8Ptr, typedef.u64]],
     'crypto_verify_16': ['int', [typedef.u8Ptr, typedef.u8Ptr]],
