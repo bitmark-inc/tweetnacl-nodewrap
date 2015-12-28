@@ -51,7 +51,6 @@
     "crypto": false
   },
   "scripts": {
-    "test": "node test/index.js",
-    "install": "scripts/check_installation.sh"
+    "install": "node scripts/install_dependencies.js"
   }
 }
