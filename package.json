@@ -1,6 +1,6 @@
 {
   "name": "tweetnacl-nodewrap",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Nodejs wraper for TweetNaCl cryptographic library",
   "main": "src/js/nacl.js",
   "directories": {
