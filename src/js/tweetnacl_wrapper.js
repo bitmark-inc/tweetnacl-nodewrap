@@ -6,12 +6,7 @@ var ffi = require('ffi');
 var typedef = require('./tweetnacl_typedef.js')();
 var path = require('path');
 var crypto = require('crypto');
-var libPath = '';
-if (ffi.LIB_EXT === '.dll') {
-  libPath = path.resolve(__dirname.replace('\\js', '\\'), 'c\\libtweetnacl');
-} else {
-  libPath = path.resolve(__dirname.replace('/js', '/'), 'c/libtweetnacl');
-}
+var libPath = path.resolve(__dirname, '..', 'c', 'libtweetnacl');
 
 module.exports = function() {
   var libencrypt = ffi.Library(libPath, {
