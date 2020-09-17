@@ -8,7 +8,7 @@ var enc = nacl.util.encodeBase64,
 
 module.exports = function() {
   test('nacl.box random test vectors', function(t) {
-    var nonce = (new Buffer(nacl.box.nonceLength)).fill(0);
+    var nonce = Buffer.alloc(nacl.box.nonceLength, 0);
     randomVectors.forEach(function(vec) {
       var pk1 = dec(vec[0]);
       var sk2 = dec(vec[1]);

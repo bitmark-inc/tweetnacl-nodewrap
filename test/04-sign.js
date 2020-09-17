@@ -27,7 +27,7 @@ module.exports = function() {
 
   test('nacl.sign and nacl.sign.open specified vectors', function(t) {
     var keys = nacl.sign.keyPair();
-    var m = (new Buffer(100)).fill(0);
+    var m = Buffer.alloc(100, 0);
     for (var i = 0; i < m.length; i++) m[i] = i & 0xff;
 
     var signedMsg = nacl.sign(m, keys.secretKey);
@@ -61,7 +61,7 @@ module.exports = function() {
 
   test('nacl.sign.detached and nacl.sign.detached.verify', function(t) {
     var k = nacl.sign.keyPair();
-    var m = (new Buffer(100)).fill(0);
+    var m = Buffer.alloc(100, 0);
     for (var i = 0; i < m.length; i++) {
         m[i] = i & 0xff;
     }
@@ -71,7 +71,7 @@ module.exports = function() {
     t.ok(result, 'signature must be verified');
     t.throws(function() { nacl.sign.detached.verify(m, sig, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');
     t.throws(function() { nacl.sign.detached.verify(m, sig.subarray(1), k.publicKey); }, Error, 'throws error for wrong signature size');
-    var badPublicKey = (new Buffer(k.publicKey.length)).fill(0);
+    var badPublicKey = Buffer.alloc(k.publicKey.length, 0);
     result = nacl.sign.detached.verify(m, sig, badPublicKey);
     t.equal(result, false, 'signature must not be verified with wrong public key');
     for (i = 0; i < 10; i++) {

@@ -62,9 +62,8 @@
     }
   }
 
-  function checkArrayTypes() {
-    var t, i;
-    for (i = 0; i < arguments.length; i++) {
+  function checkBufferTypes() {
+    for (let i = 0; i < arguments.length; i++) {
        if (!Buffer.isBuffer(arguments[i])) {
          throw new TypeError('unexpected type, use Buffer');
        }
@@ -84,21 +83,21 @@
   };
 
   nacl.util.decodeBase64 = function(s) {
-    return new Buffer(s, 'base64');
+    return new Buffer.from(s, 'base64');
   };
 
   nacl.randomBytes = function(n) {
-    var b = new Buffer(n);
+    var b = Buffer.alloc(n);
     tweetnacl.random_bytes(b, n);
     return b;
   };
 
   nacl.secretbox = function(msg, nonce, key) {
-    checkArrayTypes(msg, nonce, key);
+    checkBufferTypes(msg, nonce, key);
     checkLengths(key, nonce);
 
-    var m = (new Buffer(crypto_secretbox_ZEROBYTES + msg.length)).fill(0);
-    var c = (new Buffer(m.length)).fill(0);
+    var m = Buffer.alloc(crypto_secretbox_ZEROBYTES + msg.length, 0);
+    var c = Buffer.alloc(m.length);
 
     // Append message into end of the m buffer
     for (var i = 0; i < msg.length; i++) {
@@ -111,11 +110,11 @@
   };
 
   nacl.secretbox.open = function(box, nonce, key) {
-    checkArrayTypes(box, nonce, key);
+    checkBufferTypes(box, nonce, key);
     checkLengths(key, nonce);
 
-    var c = (new Buffer(crypto_secretbox_BOXZEROBYTES + box.length)).fill(0);
-    var m = (new Buffer(c.length)).fill(0);
+    var c = Buffer.alloc(crypto_secretbox_BOXZEROBYTES + box.length, 0);
+    var m = Buffer.alloc(c.length, 0);
     for (var i = 0; i < box.length; i++) {
       c[i+crypto_secretbox_BOXZEROBYTES] = box[i];
     }
@@ -134,24 +133,24 @@
   nacl.secretbox.overheadLength = crypto_secretbox_BOXZEROBYTES;
 
   nacl.scalarMult = function(n, p) {
-    checkArrayTypes(n, p);
+    checkBufferTypes(n, p);
     if (n.length !== crypto_scalarmult_SCALARBYTES) {
       throw new Error('bad n size');
     }
     if (p.length !== crypto_scalarmult_BYTES) {
       throw new Error('bad p size');
     }
-    var q = (new Buffer(crypto_scalarmult_BYTES)).fill(0);
+    var q = Buffer.alloc(crypto_scalarmult_BYTES, 0);
     tweetnacl.crypto_scalarmult(q, n, p);
     return q;
   };
 
   nacl.scalarMult.base = function(n) {
-    checkArrayTypes(n);
+    checkBufferTypes(n);
     if (n.length !== crypto_scalarmult_SCALARBYTES) {
       throw new Error('bad n size');
     }
-    var q = (new Buffer(crypto_scalarmult_BYTES)).fill(0);
+    var q = Buffer.alloc(crypto_scalarmult_BYTES, 0);
     tweetnacl.crypto_scalarmult_base(q, n);
     return q;
   };
@@ -165,9 +164,9 @@
   };
 
   nacl.box.before = function(publicKey, secretKey) {
-    checkArrayTypes(publicKey, secretKey);
+    checkBufferTypes(publicKey, secretKey);
     checkBoxLengths(publicKey, secretKey);
-    var k = (new Buffer(crypto_box_BEFORENMBYTES)).fill(0);
+    var k = Buffer.alloc(crypto_box_BEFORENMBYTES, 0);
     tweetnacl.crypto_box_beforenm(k, publicKey, secretKey);
     return k;
   };
@@ -182,20 +181,20 @@
   nacl.box.open.after = nacl.secretbox.open;
 
   nacl.box.keyPair = function() {
-    var pk = (new Buffer(crypto_box_PUBLICKEYBYTES)).fill(0);
-    var sk = (new Buffer(crypto_box_SECRETKEYBYTES)).fill(0);
+    var pk = Buffer.alloc(crypto_box_PUBLICKEYBYTES, 0);
+    var sk = Buffer.alloc(crypto_box_SECRETKEYBYTES, 0);
     tweetnacl.crypto_box_keypair(pk, sk);
     return {publicKey: pk, secretKey: sk};
   };
 
   nacl.box.keyPair.fromSecretKey = function(secretKey) {
-    checkArrayTypes(secretKey);
+    checkBufferTypes(secretKey);
     if (secretKey.length !== crypto_box_SECRETKEYBYTES) {
       throw new Error('bad secret key size');
     }
-    var pk = (new Buffer(crypto_box_PUBLICKEYBYTES)).fill(0);
+    var pk = Buffer.alloc(crypto_box_PUBLICKEYBYTES, 0);
     tweetnacl.crypto_scalarmult_base(pk, secretKey);
-    return {publicKey: pk, secretKey: new Buffer(secretKey)};
+    return {publicKey: pk, secretKey: Buffer.from(secretKey)};
   };
 
   nacl.box.publicKeyLength = crypto_box_PUBLICKEYBYTES;
@@ -205,11 +204,11 @@
   nacl.box.overheadLength = nacl.secretbox.overheadLength;
 
   nacl.sign = function(msg, secretKey) {
-    checkArrayTypes(msg, secretKey);
+    checkBufferTypes(msg, secretKey);
     if (secretKey.length !== crypto_sign_SECRETKEYBYTES) {
       throw new Error('bad secret key size');
     }
-    var signedMsg = (new Buffer(crypto_sign_BYTES + msg.length)).fill(0);
+    var signedMsg = Buffer.alloc(crypto_sign_BYTES + msg.length, 0);
     var signedMsgLenght = typedef.ref.alloc(typedef.u64);
     tweetnacl.crypto_sign(signedMsg, signedMsgLenght, msg, msg.length, secretKey);
     return signedMsg;
@@ -219,16 +218,16 @@
     if (arguments.length !== 2){
       throw new Error('nacl.sign.open accepts 2 arguments; did you mean to use nacl.sign.detached.verify?');
     }
-    checkArrayTypes(signedMsg, publicKey);
+    checkBufferTypes(signedMsg, publicKey);
     if (publicKey.length !== crypto_sign_PUBLICKEYBYTES){
       throw new Error('bad public key size');
     }
-    var tmp = (new Buffer(signedMsg.length)).fill(0);
-    var tmpLenght = typedef.ref.alloc(typedef.u64);
-    if (tweetnacl.crypto_sign_open(tmp, tmpLenght, signedMsg, signedMsg.length, publicKey) !== 0) {
+    var tmp = Buffer.alloc(signedMsg.length, 0);
+    var tmpLength = typedef.ref.alloc(typedef.u64);
+    if (tweetnacl.crypto_sign_open(tmp, tmpLength, signedMsg, signedMsg.length, publicKey) !== 0) {
       return false;
     }
-    var m = (new Buffer(tmpLenght.readUInt8(0))).fill(0);
+    var m = Buffer.alloc(tmpLength.readUInt8(0), 0);
     for (var i = 0; i < m.length; i++) {
       m[i] = tmp[i];
     }
@@ -237,23 +236,20 @@
 
   nacl.sign.detached = function(msg, secretKey) {
     var signedMsg = nacl.sign(msg, secretKey);
-    var sig = (new Buffer(crypto_sign_BYTES)).fill();
-    for (var i = 0; i < sig.length; i++) {
-      sig[i] = signedMsg[i];
-    }
+    var sig = Buffer.from(signedMsg.slice(0, crypto_sign_BYTES));
     return sig;
   };
 
   nacl.sign.detached.verify = function(msg, sig, publicKey) {
-    checkArrayTypes(msg, sig, publicKey);
+    checkBufferTypes(msg, sig, publicKey);
     if (sig.length !== crypto_sign_BYTES) {
       throw new Error('bad signature size');
     }
     if (publicKey.length !== crypto_sign_PUBLICKEYBYTES) {
       throw new Error('bad public key size');
     }
-    var sm = (new Buffer(crypto_sign_BYTES + msg.length)).fill(0);
-    var m = (new Buffer(crypto_sign_BYTES + msg.length)).fill(0);
+    var sm = Buffer.alloc(crypto_sign_BYTES + msg.length, 0);
+    var m = Buffer.alloc(crypto_sign_BYTES + msg.length, 0);
     var i;
     for (i = 0; i < crypto_sign_BYTES; i++) {
       sm[i] = sig[i];
@@ -266,31 +262,31 @@
   };
 
   nacl.sign.keyPair = function() {
-    var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
-    var sk = (new Buffer(crypto_sign_SECRETKEYBYTES)).fill(0);
+    var pk = Buffer.alloc(crypto_sign_PUBLICKEYBYTES, 0);
+    var sk = Buffer.alloc(crypto_sign_SECRETKEYBYTES, 0);
     tweetnacl.crypto_sign_keypair_wrap(pk, sk);
     return {publicKey: pk, secretKey: sk};
   };
 
   nacl.sign.keyPair.fromSecretKey = function(secretKey) {
-    checkArrayTypes(secretKey);
+    checkBufferTypes(secretKey);
     if (secretKey.length !== crypto_sign_SECRETKEYBYTES) {
       throw new Error('bad secret key size');
     }
-    var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
+    var pk = Buffer.alloc(crypto_sign_PUBLICKEYBYTES, 0);
     for (var i = 0; i < pk.length; i++) {
       pk[i] = secretKey[32+i];
     }
-    return {publicKey: pk, secretKey: new Buffer(secretKey)};
+    return {publicKey: pk, secretKey: Buffer.from(secretKey)};
   };
 
   nacl.sign.keyPair.fromSeed = function(seed) {
-    checkArrayTypes(seed);
+    checkBufferTypes(seed);
     if (seed.length !== crypto_sign_SEEDBYTES) {
       throw new Error('bad seed size');
     }
-    var pk = (new Buffer(crypto_sign_PUBLICKEYBYTES)).fill(0);
-    var sk = (new Buffer(crypto_sign_SECRETKEYBYTES)).fill(0);
+    var pk = Buffer.alloc(crypto_sign_PUBLICKEYBYTES, 0);
+    var sk = Buffer.alloc(crypto_sign_SECRETKEYBYTES, 0);
     for (var i = 0; i < 32; i++) {
       sk[i] = seed[i];
     }
@@ -304,8 +300,8 @@
   nacl.sign.signatureLength = crypto_sign_BYTES;
 
   nacl.hash = function(msg) {
-    checkArrayTypes(msg);
-    var h = new Buffer(crypto_hash_BYTES);
+    checkBufferTypes(msg);
+    var h = Buffer.alloc(crypto_hash_BYTES);
     tweetnacl.crypto_hash(h, msg, msg.length);
     return h;
   };
@@ -313,7 +309,7 @@
   nacl.hash.hashLength = crypto_hash_BYTES;
 
   nacl.verify = function(x, y) {
-    checkArrayTypes(x, y);
+    checkBufferTypes(x, y);
     // Zero length arguments are considered not equal.
     if (x.length === 0 || y.length === 0) {
       return false;

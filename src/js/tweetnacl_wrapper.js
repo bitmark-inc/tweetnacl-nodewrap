@@ -2,7 +2,7 @@
 // gcc -dynamiclib -undefined suppress -flat_namespace tweetnacl.c -o libtweetnacl.dylib
 // gcc -shared -fpic randombytes.c -o librandombytes.so
 
-var ffi = require('ffi');
+var ffi = require('ffi-napi');
 var typedef = require('./tweetnacl_typedef.js')();
 var path = require('path');
 var crypto = require('crypto');

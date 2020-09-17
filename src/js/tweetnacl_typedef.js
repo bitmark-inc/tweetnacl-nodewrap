@@ -1,4 +1,4 @@
-var ref = require('ref');
+var ref = require('ref-napi');
 
 var sv = ref.types.void;
 var u8 = ref.types.CString;

@@ -44,7 +44,7 @@ Tweetnacl-nodewrap.js supports for all of devices:
 
 Other systems:
 
-* [Node.js](https://nodejs.org/en/) (we test on 0.10 and later)
+* [Node.js](https://nodejs.org/en/) (we test on nodejs 10.20 and 12)
 * g++: Install g++ to compile C++ code
 * [node-gyp](https://github.com/nodejs/node-gyp): native addon build tool
 

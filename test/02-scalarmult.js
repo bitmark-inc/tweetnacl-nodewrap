@@ -10,10 +10,10 @@ module.exports = function() {
   test('nacl.scalarMult.base', function(t) {
     // This takes takes a bit of time.
     // Similar to https://code.google.com/p/go/source/browse/curve25519/curve25519_test.go?repo=crypto
-    var golden = new Buffer([0x89, 0x16, 0x1f, 0xde, 0x88, 0x7b, 0x2b, 0x53, 0xde, 0x54,
+    var golden = Buffer.from([0x89, 0x16, 0x1f, 0xde, 0x88, 0x7b, 0x2b, 0x53, 0xde, 0x54,
       0x9a, 0xf4, 0x83, 0x94, 0x01, 0x06, 0xec, 0xc1, 0x14, 0xd6, 0x98, 0x2d,
       0xaa, 0x98, 0x25, 0x6d, 0xe2, 0x3b, 0xdf, 0x77, 0x66, 0x1a]);
-    var input = new Buffer([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    var input = Buffer.from([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     for (var i = 0; i < 200; i++) {
       input = nacl.scalarMult.base(input);
